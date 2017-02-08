@@ -5,6 +5,6 @@ Isto vai ajudar o pessoal e evitar um trabalho manual para importações de dado
 
 ### configuração
 
-- Fazer o checkout do projeto
+- Fazer o clone do projeto
 - Executar o comando `pip install -r requirements.txt`
 - Rodar o projeto
