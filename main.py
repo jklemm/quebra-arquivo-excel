@@ -1,4 +1,5 @@
 import xlrd
+import xlwt
 
 # TODO: Obter uma planilha real com muitas linhas para importação
 # TODO: Como se geram arquivos excel a partir do python
@@ -15,5 +16,14 @@ def abrir_arquivo_excel():
     for rx in range(sh.nrows):
         print(sh.row(rx))
 
+
+def salvar_arquivo_excel():
+    workbook = xlwt.Workbook()
+    sheet = workbook.add_sheet("Nome da planilha")
+    style = xlwt.easyxf('font: bold 1')
+    sheet.write(0, 0, 'foobar', style)
+    workbook.save("novo_arquivo.xls")
+
 if __name__ == '__main__':
     abrir_arquivo_excel()
+    salvar_arquivo_excel()
