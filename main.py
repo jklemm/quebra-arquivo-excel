@@ -1,29 +1,47 @@
 import xlrd
 import xlwt
 
-# TODO: Obter uma planilha real com muitas linhas para importação
-# TODO: Como se geram arquivos excel a partir do python
-
 
 def abrir_arquivo_excel():
-    book = xlrd.open_workbook("modelo.xls")
-    print("The number of worksheets is {0}".format(book.nsheets))
-    print("Worksheet name(s): {0}".format(book.sheet_names()))
-    sh = book.sheet_by_index(0)
-    print("{0} {1} {2}".format(sh.name, sh.nrows, sh.ncols))
-    print("Cell D30 is {0}".format(sh.cell_value(rowx=0, colx=0)))
-
-    for rx in range(sh.nrows):
-        print(sh.row(rx))
+    return xlrd.open_workbook("modelo.xls")
 
 
-def salvar_arquivo_excel():
+def tranformar_conteudo_em_uma_lista(workbook):
+    sheet_values = []
+    sheet = workbook.sheet_by_index(0)
+    for row in range(sheet.nrows):
+        row_values = []
+        for col in range(sheet.ncols):
+            value = sheet.cell_value(row, col)
+            row_values.append(value)
+        sheet_values.append(row_values)
+    return sheet_values
+
+
+def criar_novo_arquivo_e_planilha():
     workbook = xlwt.Workbook()
-    sheet = workbook.add_sheet("Nome da planilha")
-    style = xlwt.easyxf('font: bold 1')
-    sheet.write(0, 0, 'foobar', style)
-    workbook.save("novo_arquivo.xls")
+    sheet = workbook.add_sheet("Planilha1")
+    return workbook, sheet
+
 
 if __name__ == '__main__':
-    abrir_arquivo_excel()
-    salvar_arquivo_excel()
+    arquivo_excel_grande = abrir_arquivo_excel()
+
+    lista = tranformar_conteudo_em_uma_lista(arquivo_excel_grande)
+
+    altura_da_lista = len(lista)
+    comprimento_da_lista = len(lista[0])
+
+    arquivo_excel_pequeno, planilha = criar_novo_arquivo_e_planilha()
+    contador_de_arquivos = 1
+
+    # FIXME: Apenas o primeiro arquivo excel está sendo gerado com cabeçalho
+
+    for x in range(altura_da_lista):
+        for y in range(comprimento_da_lista):
+            planilha.write(x, y, lista[x][y])
+            
+        if x > 0 and x % 40 == 0:
+            arquivo_excel_pequeno.save('novo_arquivo_{}.xls'.format(contador_de_arquivos))
+            contador_de_arquivos += 1
+            arquivo_excel_pequeno, planilha = criar_novo_arquivo_e_planilha()
