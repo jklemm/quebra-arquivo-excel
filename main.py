@@ -42,6 +42,7 @@ if __name__ == '__main__':
             planilha.write(x, y, lista[x][y])
             
         if x > 0 and x % 40 == 0:
-            arquivo_excel_pequeno.save('novo_arquivo_{}.xls'.format(contador_de_arquivos))
+            contador = str(contador_de_arquivos).zfill(2)
+            arquivo_excel_pequeno.save('novo_arquivo_{}.xls'.format(contador))
             contador_de_arquivos += 1
             arquivo_excel_pequeno, planilha = criar_novo_arquivo_e_planilha()
