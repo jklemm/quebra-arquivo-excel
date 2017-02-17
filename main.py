@@ -24,6 +24,11 @@ def criar_novo_arquivo_e_planilha():
     return workbook, sheet
 
 
+def imprime_cabecalho(cabecalho, planilha):
+    for indice_coluna, valor_coluna in enumerate(cabecalho):
+        planilha.write(0, indice_coluna, valor_coluna)
+
+
 if __name__ == '__main__':
     arquivo_excel_grande = abrir_arquivo_excel()
 
@@ -31,17 +36,20 @@ if __name__ == '__main__':
 
     altura_da_lista = len(lista)
     comprimento_da_lista = len(lista[0])
+    cabecalho = lista[0]
 
     arquivo_excel_pequeno, planilha = criar_novo_arquivo_e_planilha()
     contador_de_arquivos = 1
     quebra_em_linhas = 40
 
-    # FIXME: Apenas o primeiro arquivo excel está sendo gerado com cabeçalho
-
     destino_x = 0
     destino_y = 0
 
-    for x in range(altura_da_lista):
+    for x in range(1, altura_da_lista):
+
+        if destino_x == 0:
+            imprime_cabecalho(cabecalho, planilha)
+            destino_x += 1
 
         for y in range(comprimento_da_lista):
             planilha.write(destino_x, destino_y, lista[x][y])
