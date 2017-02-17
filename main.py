@@ -34,15 +34,26 @@ if __name__ == '__main__':
 
     arquivo_excel_pequeno, planilha = criar_novo_arquivo_e_planilha()
     contador_de_arquivos = 1
+    quebra_em_linhas = 40
 
     # FIXME: Apenas o primeiro arquivo excel está sendo gerado com cabeçalho
 
+    destino_x = 0
+    destino_y = 0
+
     for x in range(altura_da_lista):
+
         for y in range(comprimento_da_lista):
-            planilha.write(x, y, lista[x][y])
-            
-        if x > 0 and x % 40 == 0:
+            planilha.write(destino_x, destino_y, lista[x][y])
+            destino_y += 1
+
+        destino_y = 0
+        destino_x += 1
+
+        if x > 0 and x % quebra_em_linhas == 0 or x == altura_da_lista - 1:
             contador = str(contador_de_arquivos).zfill(2)
             arquivo_excel_pequeno.save('novo_arquivo_{}.xls'.format(contador))
             contador_de_arquivos += 1
             arquivo_excel_pequeno, planilha = criar_novo_arquivo_e_planilha()
+            destino_x = 0
+            destino_y = 0
