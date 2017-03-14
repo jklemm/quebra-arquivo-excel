@@ -3,7 +3,7 @@ import xlwt
 
 
 def abrir_arquivo_excel():
-    return xlrd.open_workbook("modelo.xls")
+    return xlrd.open_workbook("planilha_leno_28k.xls")
 
 
 def tranformar_conteudo_em_uma_lista(workbook):
@@ -40,7 +40,7 @@ if __name__ == '__main__':
 
     arquivo_excel_pequeno, planilha = criar_novo_arquivo_e_planilha()
     contador_de_arquivos = 1
-    quebra_em_linhas = 40
+    quebra_em_linhas = 3000
 
     destino_x = 0
     destino_y = 0
@@ -60,7 +60,7 @@ if __name__ == '__main__':
 
         if x > 0 and x % quebra_em_linhas == 0 or x == altura_da_lista - 1:
             contador = str(contador_de_arquivos).zfill(2)
-            arquivo_excel_pequeno.save('novo_arquivo_{}.xls'.format(contador))
+            arquivo_excel_pequeno.save('planilha_leno_{}.xls'.format(contador))
             contador_de_arquivos += 1
             arquivo_excel_pequeno, planilha = criar_novo_arquivo_e_planilha()
             destino_x = 0
