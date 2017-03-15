@@ -38,6 +38,11 @@ if __name__ == '__main__':
     comprimento_da_lista = len(lista[0])
     cabecalho = lista[0]
 
+    # TODO: Ao invés de criar novo arquivo e planilha, deveria utilizar o modelo pronto e apenas popular
+    # TODO: Não esquecer de validar qual é o modelo da planilha de entrada, para utilizar o modelo correto
+    # TODO: Como existe importação de Clientes e Produtos, vale a pena avaliar o conteúdo da primeira coluna da planilha 
+    # (Código do Produto ou Razão Social) para avaliar qual é o modelo a ser utilizado.
+
     arquivo_excel_pequeno, planilha = criar_novo_arquivo_e_planilha()
     contador_de_arquivos = 1
     quebra_em_linhas = 3000
